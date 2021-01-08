@@ -1,6 +1,7 @@
 <% if logged_in? %>
     <% if current_user %>
-        <%= link_to "Nuova credenziale", '/credentials/new', class: "btn btn-success btn-lg btn-block" %>
+        <%= link_to "Nuovo Prestito", '/loans/new', class: "btn btn-success btn-lg btn-block" %>
+        <%= link_to "Nuovo Libro", '/books/new', class: "btn btn-success btn-lg btn-block" %>
     <% end %>
     <%= link_to "Crea utente", '/users/new', class: "btn btn-primary btn-lg btn-block" %>
 <% else %>
