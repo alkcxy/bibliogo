@@ -7,9 +7,36 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@8.1.0/dist/css/autoComplete.min.css">
   </head>
 
   <body>
-    <%= yield %>
+    <div class="container">
+      <% if logged_in? %>
+      <div class="row">
+        <div class="col">
+          <h1>Bibliogo</h1>
+          <% if current_user %>
+              <small>Benvenuto, sei autenticato come <%= link_to current_user.name, current_user %></small>
+          <% end %>
+        </div>
+        <div class="col">
+          <div class="btn-group" role="group" aria-label="Strumenti">
+            <%= link_to 'Home', welcome_path, class: "btn btn-dark btn-lg" %>
+            <%= link_to "Libri", '/books', class: "btn btn-success btn-lg" %>
+            <% if current_user %>
+              <%= link_to "Prestiti", '/loans', class: "btn btn-success btn-lg" %>
+            <% end %>
+            <%= link_to "Utenti", '/users', class: "btn btn-primary btn-lg" %>
+            <% if current_user %>
+              <%= link_to 'Esci', '/logout', class: "btn btn-danger btn-lg", data: { method: :delete } %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <% end %>
+      <div id="notice"><%= notice %></div>
+      <%= yield %>
+    </div>
   </body>
 </html>

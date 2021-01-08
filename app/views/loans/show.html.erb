@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @loan.date %>
+</p>
+
+<p>
+  <strong>Expected return:</strong>
+  <%= @loan.expected_return %>
+</p>
+
+<p>
+  <strong>Actual return:</strong>
+  <%= @loan.actual_return %>
+</p>
+
+<p>
+  <strong>Place:</strong>
+  <%= @loan.place %>
+</p>
+
+<p>
+  <strong>Reader:</strong>
+  <%= @loan.reader %>
+</p>
+
+<%= link_to 'Edit', edit_loan_path(@loan) %> |
+<%= link_to 'Back', loans_path %>

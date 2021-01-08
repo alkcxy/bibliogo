@@ -1,0 +1,32 @@
+<h1>Utenti</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= link_to 'Visualizza', user %></td>
+        <td><%= link_to 'Modifica', edit_user_path(user) %></td>
+        <td><%= link_to 'Cancella', user, method: :delete, data: { confirm: 'Sei sicuro?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= paginate @users %>
+<br />
+<div class="btn-group" role="group" aria-label="Strumenti">
+  <%= link_to 'Nuovo Utente', new_user_path, class: "btn btn-primary" %>
+  <%= link_to 'Home', welcome_path, class: "btn btn-primary" %>
+</div>

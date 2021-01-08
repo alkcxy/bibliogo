@@ -1,10 +1,13 @@
 class BooksController < ApplicationController
+  before_action :authorized, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_book, only: [:show, :edit, :update, :destroy]
 
   # GET /books
   # GET /books.json
   def index
     @books = Book.all
+    @books = @books.any_of({ '$text' => { '$search' => params[:q] }}, { code: params[:q] }, { isbn: params[:q] }, { year:  params[:q] } ) if !params[:q].blank?
+    #@books = @books.where({ :code =>  params[:q].to_i }) if !params[:q].blank?
   end
 
   # GET /books/1
@@ -15,6 +18,7 @@ class BooksController < ApplicationController
   # GET /books/new
   def new
     @book = Book.new
+    @book.code = Book.count + 1
   end
 
   # GET /books/1/edit
@@ -25,6 +29,7 @@ class BooksController < ApplicationController
   # POST /books.json
   def create
     @book = Book.new(book_params)
+    @book.code = Book.count + 1 if @book.code.blank?
     @book.authors = params[:book][:authors].split(',\s?')
 
     respond_to do |format|
@@ -71,6 +76,6 @@ class BooksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def book_params
-      params.require(:book).permit(:title, :year, :genre, :language, :spot, :isbn, :abstract)
+      params.require(:book).permit(:title, :year, :genre, :language, :spot, :isbn, :abstract, :code)
     end
 end

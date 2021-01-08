@@ -1,0 +1,9 @@
+<h1>Editing Loan</h1>
+
+<%= render 'form', loan: @loan %>
+
+<br />
+<div class="btn-group" role="group" aria-label="Strumenti">
+    <%= link_to 'Visualizza', @loan, class: "btn btn-primary" %>
+    <%= link_to 'Prestiti', loans_path, class: "btn btn-primary" %>
+</div>

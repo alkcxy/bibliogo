@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>Code:</strong>
+  <%= @book.code %>
+</p>
+
+<p>
   <strong>Title:</strong>
   <%= @book.title %>
 </p>
@@ -40,5 +45,8 @@
   <%= @book.abstract %>
 </p>
 
-<%= link_to 'Edit', edit_book_path(@book) %> |
-<%= link_to 'Back', books_path %>
+<br />
+<div class="btn-group" role="group" aria-label="Strumenti">
+  <%= link_to 'Modifica', edit_book_path(@book), class: "btn btn-primary" %>
+  <%= link_to 'Libri', books_path, class: "btn btn-primary" %>
+</div>

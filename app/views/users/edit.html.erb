@@ -1,0 +1,8 @@
+<h1>Modifica Utente</h1>
+
+<%= render 'form', user: @user %>
+<br />
+<div class="btn-group" role="group" aria-label="Strumenti">
+    <%= link_to 'Visualizza', @user, class: "btn btn-primary" %>
+    <%= link_to 'Utenti', users_path, class: "btn btn-primary" %>
+</div>

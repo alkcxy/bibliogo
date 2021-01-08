@@ -5,6 +5,7 @@
 <table>
   <thead>
     <tr>
+      <th>Code</th>
       <th>Title</th>
       <th>Authors</th>
       <th>Year</th>
@@ -19,6 +20,7 @@
   <tbody>
     <% @books.each do |book| %>
       <tr>
+        <td><%= book.code %></td>
         <td><%= book.title %></td>
         <td><%= book.authors %></td>
         <td><%= book.year %></td>
@@ -34,6 +36,8 @@
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Book', new_book_path %>
+<br />
+<div class="btn-group" role="group" aria-label="Strumenti">
+  <%= link_to 'Nuovo Libro', new_book_path, class: "btn btn-primary" %>
+  <%= link_to 'Home', welcome_path, class: "btn btn-primary" %>
+</div>

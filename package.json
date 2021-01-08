@@ -1,10 +1,11 @@
 {
-  "name": "password_manager",
+  "name": "bibliogo",
   "private": true,
   "dependencies": {
     "@rails/actioncable": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "4.3.0",
+    "@tarekraafat/autocomplete.js": "^8.1.0",
     "bootstrap": "^4.5.0",
     "jquery": "^3.5.1",
     "popper.js": "^1.16.1",

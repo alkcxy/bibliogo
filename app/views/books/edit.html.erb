@@ -1,6 +1,8 @@
 <h1>Editing Book</h1>
 
 <%= render 'form', book: @book %>
-
-<%= link_to 'Show', @book %> |
-<%= link_to 'Back', books_path %>
+<br />
+<div class="btn-group" role="group" aria-label="Strumenti">
+    <%= link_to 'Visualizza', @book, class: "btn btn-primary" %>
+    <%= link_to 'Libri', books_path, class: "btn btn-primary" %>
+</div>

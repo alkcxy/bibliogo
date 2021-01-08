@@ -1,0 +1,51 @@
+<%= form_with(model: loan, local: true) do |form| %>
+  <% if loan.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(loan.errors.count, "error") %> prohibited this loan from being saved:</h2>
+
+      <ul>
+        <% loan.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= text_field_tag :autoComplete %>
+  <div class="field">
+    <%= form.label :book_id %>
+    <%= text_field_tag :book_title, book_title(loan) %>
+    <%= form.hidden_field :book_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :date %>
+    <%= form.datetime_field :date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :expected_return %>
+    <%= form.datetime_field :expected_return %>
+  </div>
+
+  <div class="field">
+    <%= form.label :actual_return %>
+    <%= form.datetime_field :actual_return %>
+  </div>
+
+  <div class="field">
+    <%= form.label :place %>
+    <%= form.text_field :place %>
+  </div>
+
+  <div class="field">
+    <%= form.label :reader %>
+    <%= form.text_field :reader %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<%= javascript_pack_tag 'autocomplete' %>
