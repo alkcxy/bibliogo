@@ -12,40 +12,38 @@
   <% end %>
 
   <%= text_field_tag :autoComplete %>
-  <div class="field">
-    <%= form.label :book_id %>
-    <%= text_field_tag :book_title, book_title(loan) %>
+  <div class="form-group">
+    <%= label_tag :book_title %>
+    <%= text_field_tag :book_title, book_title(loan), class: "form-control" %>
     <%= form.hidden_field :book_id %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :date %>
-    <%= form.datetime_field :date %>
+    <%= form.datetime_field :date, class: "form-control" %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :expected_return %>
-    <%= form.datetime_field :expected_return %>
+    <%= form.datetime_field :expected_return, class: "form-control" %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :actual_return %>
-    <%= form.datetime_field :actual_return %>
+    <%= form.datetime_field :actual_return, class: "form-control" %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :place %>
-    <%= form.text_field :place %>
+    <%= form.text_field :place, class: "form-control" %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :reader %>
-    <%= form.text_field :reader %>
+    <%= form.text_field :reader, class: "form-control" %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <%= form.submit class: "btn btn-primary" %>
 <% end %>
 
 <%= javascript_pack_tag 'autocomplete' %>

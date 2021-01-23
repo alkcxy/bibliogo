@@ -1,8 +1,6 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Loans</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Date</th>
@@ -30,6 +28,7 @@
   </tbody>
 </table>
 
+<%= paginate @loans %>
 <br />
 <div class="btn-group" role="group" aria-label="Strumenti">
   <%= link_to 'Nuovo Prestito', new_loan_path, class: "btn btn-primary" %>

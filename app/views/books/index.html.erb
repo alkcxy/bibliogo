@@ -1,8 +1,6 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Books</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Code</th>
@@ -36,6 +34,7 @@
   </tbody>
 </table>
 
+<%= paginate @books %>
 <br />
 <div class="btn-group" role="group" aria-label="Strumenti">
   <%= link_to 'Nuovo Libro', new_book_path, class: "btn btn-primary" %>

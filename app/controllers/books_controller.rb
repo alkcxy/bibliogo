@@ -7,7 +7,7 @@ class BooksController < ApplicationController
   def index
     @books = Book.all
     @books = @books.any_of({ '$text' => { '$search' => params[:q] }}, { code: params[:q] }, { isbn: params[:q] }, { year:  params[:q] } ) if !params[:q].blank?
-    #@books = @books.where({ :code =>  params[:q].to_i }) if !params[:q].blank?
+    @books = @books.page(params[:page])
   end
 
   # GET /books/1
