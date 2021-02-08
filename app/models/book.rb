@@ -25,6 +25,6 @@ class Book
   validates_presence_of :authors
   validates_presence_of :spot
   validates_presence_of :isbn
-  validates_length_of :isbn, minimum: 10, maximum: 13
+  validates_length_of :isbn, maximum: 13
 
 end
