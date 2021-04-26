@@ -6,6 +6,7 @@ rm -f tmp/pids/server.pid
 # bundle update
 # rails g mongoid:config
 # rails webpacker:install
+bundle update
 rake db:mongoid:create_indexes
 yarn install --check-file
 yarn upgrade

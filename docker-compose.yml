@@ -3,7 +3,7 @@ version: '3.5'
 services:
   mongo:
     image: mongo
-    restart: always
+    restart: 'no'
     env_file:
       - .env
     environment: 
@@ -15,7 +15,7 @@ services:
 
   mongo-express:
     image: mongo-express
-    restart: always
+    restart: 'no'
     ports:
       - 8081:8081
     environment:
