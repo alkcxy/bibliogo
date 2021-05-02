@@ -18,7 +18,7 @@
 
   <div class="form-group">
     <%= form.label :authors %>
-    <%= form.text_field :authors, class: "form-control" %>
+    <%= text_field_tag :authors, (book.authors.join(",") if book.authors), class: "form-control" %>
   </div>
 
   <div class="form-group">
@@ -43,8 +43,7 @@
 
   <div class="form-group">
     <%= form.label :isbn %>
-    <%= form.number_field :isbn, class: "form-control", data: { maxlength: 13 },
-    oninput: "javascript: this.value = this.value.slice(0, this.dataset.maxlength);" %>
+    <%= form.text_field :isbn, class: "form-control" %>
   </div>
 
   <div class="form-group">
@@ -55,6 +54,11 @@
   <div class="form-group">
     <%= form.label :code %>
     <%= form.text_field :code, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :catalogue %>
+    <%= form.text_field :catalogue, class: "form-control" %>
   </div>
 
   <%= form.submit class: "btn btn-primary" %>

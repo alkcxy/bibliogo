@@ -1,0 +1,1 @@
+Time::DATE_FORMATS[:bibliogo] = '%Y-%m-%dT%H:%M'

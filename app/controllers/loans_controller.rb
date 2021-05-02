@@ -16,6 +16,7 @@ class LoansController < ApplicationController
   # GET /loans/new
   def new
     @loan = Loan.new
+    @loan.book_id = params[:loan][:book_id] if params[:loan] and params[:loan][:book_id]
   end
 
   # GET /loans/1/edit
@@ -27,7 +28,7 @@ class LoansController < ApplicationController
   def create
     @loan = Loan.new(loan_params)
     loans = Loan.where(book_id: @loan.book_id)
-    loans_I = loans.where(date:  {'$lte' => @loan.date}).where(expected_return: {'$gte' => @loan.date})
+    loans_I = loans.where(date:  {'$lte' => @loan.date}).where(expected_return: {'$gte' => (-1*helpers.quarantine_duration).since(@loan.date)})
     loans_II = loans.where(actual_return: nil)
       .where(date:  {'$lte' => @loan.expected_return})
 
@@ -37,13 +38,13 @@ class LoansController < ApplicationController
     if @loan.actual_return
       logger.debug "Print actual return"
       logger.debug @loan.actual_return
-      loans_II = loans_II.where(expected_return: {'$gte' => @loan.actual_return})
-      loans_III = loans_III.where(actual_return: {'$gte' => @loan.actual_return})
+      loans_II = loans_II.where(expected_return: {'$gte' => (-1*helpers.quarantine_duration).since(@loan.actual_return)})
+      loans_III = loans_III.where(actual_return: {'$gte' => (-1*helpers.quarantine_duration).since(@loan.actual_return)})
     else
       logger.debug "Print expected return"
       logger.debug @loan.expected_return
-      loans_II = loans_II.where(expected_return: {'$gte' => @loan.expected_return})
-      loans_III = loans_III.where(actual_return: {'$gte' => @loan.expected_return})
+      loans_II = loans_II.where(expected_return: {'$gte' => (-1*helpers.quarantine_duration).since(@loan.expected_return)})
+      loans_III = loans_III.where(actual_return: {'$gte' => (-1*helpers.quarantine_duration).since(@loan.expected_return)})
     end
     
     loans_count = loans_I.count + loans_II.count + loans_III.count

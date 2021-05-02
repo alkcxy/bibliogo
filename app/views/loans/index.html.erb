@@ -3,6 +3,7 @@
 <table class="table">
   <thead>
     <tr>
+      <th>Book title</th>
       <th>Date</th>
       <th>Expected return</th>
       <th>Actual return</th>
@@ -15,6 +16,7 @@
   <tbody>
     <% @loans.each do |loan| %>
       <tr>
+        <td><%= loan.book.title %></td>
         <td><%= loan.date %></td>
         <td><%= loan.expected_return %></td>
         <td><%= loan.actual_return %></td>

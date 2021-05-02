@@ -8,14 +8,14 @@ class Book
   field :genre, type: String
   field :language, type: String
   field :spot, type: String
-  field :isbn, type: Integer
+  field :isbn, type: String
   field :abstract, type: String
   field :code, type: Integer
+  field :catalogue, type: String
 
   has_many :loans
 
   index({ code: 1 }, { unique: true, language_override: "lang", default_language: "it" })
-  index({ isbn: 1 }, { unique: false, language_override: "lang", default_language: "it" })
   index({ year: 1 }, { unique: false, language_override: "lang", default_language: "it" })
   index({ "$**": "text" }, { language_override: "lang", default_language: "it" })
 
@@ -25,6 +25,5 @@ class Book
   validates_presence_of :authors
   validates_presence_of :spot
   validates_presence_of :isbn
-  validates_length_of :isbn, maximum: 13
 
 end

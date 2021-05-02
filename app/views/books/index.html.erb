@@ -1,5 +1,12 @@
 <h1>Books</h1>
 
+<%= form_tag '/books', method: :get, class: "form-inline" do %>
+  <div class="form-group mx-sm-3 mb-2">
+    <%= label_tag :q, "Parola chiave", class: "sr-only"%>
+    <%= search_field_tag :q, params[:q], class: "form-control",  placeholder: "Parola chiave" %>
+  </div>
+  <%= button_tag "Cerca", class: "btn btn-primary mb-2" %>
+<% end %>
 <table class="table">
   <thead>
     <tr>
@@ -11,7 +18,9 @@
       <th>Language</th>
       <th>Spot</th>
       <th>ISBN</th>
-      <th colspan="3"></th>
+      <th>Catalogue</th>
+      <th>Status</th>
+      <th colspan="4"></th>
     </tr>
   </thead>
 
@@ -26,6 +35,19 @@
         <td><%= book.language %></td>
         <td><%= book.spot %></td>
         <td><%= book.isbn %></td>
+        <td><%= book.catalogue %></td>
+        <td>
+        <% loan = book.loans.where({ date: { '$lte' => loan_date }, expected_return: { '$gte' => quarantine_date }}).first %>
+        <% if loan %>
+          <% if loan.expected_return <= loan_date %>
+            In Quarantena.
+          <% else %>
+            In Prestito.
+          <% end %>
+          Non prestabile fino al <%= loan_from(loan) %>
+        <% end %>
+        </td>
+        <td><%= link_to 'Loan', new_loan_path("loan[book_id]": book.id, "book_title": book.title) unless loan %>
         <td><%= link_to 'Show', book %></td>
         <td><%= link_to 'Edit', edit_book_path(book) %></td>
         <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>

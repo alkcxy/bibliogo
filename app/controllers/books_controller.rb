@@ -6,7 +6,7 @@ class BooksController < ApplicationController
   # GET /books.json
   def index
     @books = Book.all
-    @books = @books.any_of({ '$text' => { '$search' => params[:q] }}, { code: params[:q] }, { isbn: params[:q] }, { year:  params[:q] } ) if !params[:q].blank?
+    @books = @books.any_of({ '$text' => { '$search' => params[:q] }}, { code: params[:q] }, { year:  params[:q] }) if !params[:q].blank?
     @books = @books.page(params[:page])
   end
 
@@ -30,7 +30,7 @@ class BooksController < ApplicationController
   def create
     @book = Book.new(book_params)
     @book.code = Book.count + 1 if @book.code.blank?
-    @book.authors = params[:book][:authors].split(',\s?')
+    @book.authors = params[:authors].split(',\s?')
 
     respond_to do |format|
       if @book.save
@@ -47,7 +47,7 @@ class BooksController < ApplicationController
   # PATCH/PUT /books/1.json
   def update
     respond_to do |format|
-      @book.authors = params[:book][:authors].split(',\s?')
+      @book.authors = params[:authors].split(',\s?')
       if @book.update(book_params)
         format.html { redirect_to @book, notice: 'Book was successfully updated.' }
         format.json { render :show, status: :ok, location: @book }
@@ -76,6 +76,6 @@ class BooksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def book_params
-      params.require(:book).permit(:title, :year, :genre, :language, :spot, :isbn, :abstract, :code)
+      params.require(:book).permit(:title, :year, :genre, :language, :spot, :isbn, :abstract, :code, :catalogue)
     end
 end

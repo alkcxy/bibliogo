@@ -1,7 +1,11 @@
 module LoansHelper
 
     def book_title loan
-        loan.book.title if loan && loan.book
+        if loan && loan.book
+            loan.book.title 
+        else
+            params[:book_title]
+        end
     end
 
 end

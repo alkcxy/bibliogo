@@ -39,12 +39,27 @@
 </p>
 
 <p>
+  <strong>Catalogue:</strong>
+  <%= @book.catalogue %>
+</p>
+
+<p>
   <strong>Abstract:</strong>
   <%= @book.abstract %>
 </p>
-
+<br />
+<% loan = @book.loans.where({ date: { '$lte' => loan_date }, expected_return: { '$gte' => quarantine_date }}).first %>
+<% if loan %>
+  <% if loan.expected_return <= loan_date %>
+    In Quarantena.
+  <% else %>
+    In Prestito.
+  <% end %>
+  Non prestabile fino al <%= loan_from(loan) %>
+<% end %>
 <br />
 <div class="btn-group" role="group" aria-label="Strumenti">
+  <%= link_to 'Presta', new_loan_path("loan[book_id]": @book.id, "book_title": @book.title), class: "btn btn-primary" unless loan %>
   <%= link_to 'Modifica', edit_book_path(@book), class: "btn btn-primary" %>
   <%= link_to 'Libri', books_path, class: "btn btn-primary" %>
 </div>
