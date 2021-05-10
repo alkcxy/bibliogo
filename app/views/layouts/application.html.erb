@@ -12,7 +12,6 @@
 
   <body>
     <div class="container">
-      <% if logged_in? %>
       <div class="row">
         <div class="col">
           <h1>Bibliogo</h1>
@@ -27,14 +26,15 @@
             <% if current_user %>
               <%= link_to "Prestiti", '/loans', class: "btn btn-success btn-lg" %>
             <% end %>
-            <%= link_to "Utenti", '/users', class: "btn btn-primary btn-lg" %>
+            <% if logged_in? %>
+              <%= link_to "Utenti", '/users', class: "btn btn-primary btn-lg" %>
+            <% end %>
             <% if current_user %>
               <%= link_to 'Esci', '/logout', class: "btn btn-danger btn-lg", data: { method: :delete } %>
             <% end %>
           </div>
         </div>
       </div>
-      <% end %>
       <div id="notice" class="alert alert-info"><%= notice %></div>
       <%= yield %>
     </div>

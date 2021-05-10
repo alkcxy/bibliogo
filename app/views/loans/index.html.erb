@@ -17,9 +17,9 @@
     <% @loans.each do |loan| %>
       <tr>
         <td><%= loan.book.title %></td>
-        <td><%= loan.date %></td>
-        <td><%= loan.expected_return %></td>
-        <td><%= loan.actual_return %></td>
+        <td><%= l loan.date %></td>
+        <td><%= l loan.expected_return %></td>
+        <td><%= l loan.actual_return if loan.actual_return %></td>
         <td><%= loan.place %></td>
         <td><%= loan.reader %></td>
         <td><%= link_to 'Show', loan %></td>

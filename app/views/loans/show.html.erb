@@ -1,18 +1,18 @@
 <p>
   <strong>Date:</strong>
-  <%= @loan.date %>
+  <%= l @loan.date %>
 </p>
 
 <p>
   <strong>Expected return:</strong>
-  <%= @loan.expected_return %>
+  <%= l @loan.expected_return %>
 </p>
-
+<% if @loan.actual_return %>
 <p>
   <strong>Actual return:</strong>
-  <%= @loan.actual_return %>
+  <%= l @loan.actual_return %>
 </p>
-
+<% end %>
 <p>
   <strong>Place:</strong>
   <%= @loan.place %>

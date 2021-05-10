@@ -12,7 +12,7 @@ new autoComplete({
         // Return Fetched data
         return data;
         },
-        key: ["title", "authors", "year", "genre", "language", "spot", "isbn", "abstract", "code"],
+        key: ["title", "authors", "year", "genre", "language", "spot", "isbn", "abstract", "code", "catalogue", "loan"],
         cache: false
     },
     placeHolder: "Books...",     // Place Holder text                 | (Optional)
@@ -34,7 +34,7 @@ new autoComplete({
     resultItem: {                          // Rendered result item            | (Optional)
         content: (data, source) => {
             const book = data.value
-            source.innerHTML = book.title + " - " + book.genre + " - " + book.year + " - " + book.isbn + " - " + book.code
+            source.innerHTML = book.title + " - " + book.genre + " - " + book.year + " - " + book.isbn + " - " + book.code + " - " + book.loan
         },
         element: "li"
     },

@@ -4,18 +4,20 @@ module ApplicationHelper
     end
 
     def quarantine_date
-        quarantine_duration.ago.to_formatted_s(:bibliogo)
+        quarantine_duration.ago
     end
 
     def loan_date
-        0.days.ago.to_formatted_s(:bibliogo)
+        0.days.ago
     end
 
-    def loan_from(loan)
-        if loan.actual_return
-            quarantine_duration.since(loan.actual_return)
-        else
-            quarantine_duration.since(loan.expected_return)
+    def loan_from_raw(loan_date)
+        if !loan_date.blank?
+            quarantine_duration.since(loan_date)
         end
+    end
+
+    def loan_from(date_of_loan)
+        I18n.l quarantine_duration.since(date_of_loan), format: :long
     end
 end
