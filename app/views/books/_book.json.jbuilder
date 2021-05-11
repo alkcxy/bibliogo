@@ -1,4 +1,5 @@
-json.extract! book, :id, :title, :authors, :year, :genre, :language, :spot, :isbn, :abstract, :code, :catalogue, :created_at, :updated_at
+json.extract! book, :id, :title, :year, :genre, :language, :spot, :isbn, :abstract, :code, :catalogue, :created_at, :updated_at
+json.authors book.authors.join(', ')
 json.url book_url(book, format: :json)
 date_of_loan = book.loans.unloanable(loan_date, quarantine_date)
 if date_of_loan
