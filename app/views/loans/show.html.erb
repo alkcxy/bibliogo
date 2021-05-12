@@ -1,4 +1,9 @@
 <p>
+  <strong>Book Title:</strong>
+  <%= link_to @loan.book.title, @loan.book %>
+</p>
+
+<p>
   <strong>Date:</strong>
   <%= l @loan.date %>
 </p>

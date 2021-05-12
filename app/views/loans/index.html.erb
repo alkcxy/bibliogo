@@ -16,7 +16,7 @@
   <tbody>
     <% @loans.each do |loan| %>
       <tr>
-        <td><%= loan.book.title %></td>
+        <td><%= link_to loan.book.title, loan.book %></td>
         <td><%= l loan.date %></td>
         <td><%= l loan.expected_return %></td>
         <td><%= l loan.actual_return if loan.actual_return %></td>

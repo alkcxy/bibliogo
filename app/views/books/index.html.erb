@@ -40,9 +40,9 @@
         <% date_of_loan = book.loans.unloanable(loan_date, quarantine_date) %>
         <% if date_of_loan %>
           <% if date_of_loan <= loan_date %>
-            In Quarantena.
+            <%= link_to "In Quarantena.", book.loans.lent(loan_date, quarantine_date) %>
           <% else %>
-            In Prestito.
+            <%= link_to "In Prestito.", book.loans.lent(loan_date, quarantine_date) %>
           <% end %>
           Non prestabile fino al <%= loan_from(date_of_loan) %>
         <% end %>
