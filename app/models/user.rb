@@ -9,6 +9,8 @@ class User
 
   has_secure_password
 
+  paginates_per 1 if Rails.env.development?
+
   index({ email: 1 }, { unique: true })
   validates_length_of :password, minimum: 8
   validates_presence_of :email

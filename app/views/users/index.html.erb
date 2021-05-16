@@ -3,9 +3,9 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Name</th>
+      <th><%= t('mongoid.attributes.user.name') %></th>
       <th>Email</th>
-      <th colspan="3"></th>
+      <th colspan="3" class="text-center"><span class="bi bi-tools"></span></th>
     </tr>
   </thead>
 
@@ -14,18 +14,28 @@
       <tr>
         <td><%= user.name %></td>
         <td><%= user.email %></td>
-        <td><%= link_to 'Visualizza', user %></td>
-        <td><%= link_to 'Modifica', edit_user_path(user) %></td>
-        <td><%= link_to 'Cancella', user, method: :delete, data: { confirm: 'Sei sicuro?' } %></td>
+        <td>
+          <%= link_to user, title: "Visualizza" do %>
+            <span class="bi bi-view-list"></span>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to edit_user_path(user), title: "Modifica" do %>
+            <span class="bi bi-pencil-square"></span>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to user, method: :delete, data: { confirm: 'Sei sicuro?' }, title: "Cancella" do %>
+            <span class="bi bi-trash"></span>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
 <%= paginate @users %>
-<br />
+
 <div class="btn-group" role="group" aria-label="Strumenti">
   <%= link_to 'Nuovo Utente', new_user_path, class: "btn btn-primary" %>
   <%= link_to 'Home', welcome_path, class: "btn btn-primary" %>

@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   resources :loans
-  resources :books
+  resources :books do
+    get 'clone', on: :collection
+  end
   resources :users
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'

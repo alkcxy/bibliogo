@@ -13,8 +13,8 @@
 
   <%= text_field_tag :autoComplete %>
   <div class="form-group">
-    <%= label_tag :book_title %>
-    <%= text_field_tag :book_title, book_title(loan), class: "form-control" %>
+    <%= label_tag :book_title, t('helpers.label.book_title')  %>
+    <%= text_field_tag :book_title, book_title(loan), class: "form-control", readonly: true %>
     <%= form.hidden_field :book_id %>
   </div>
 

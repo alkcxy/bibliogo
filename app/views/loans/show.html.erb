@@ -1,32 +1,36 @@
 <p>
-  <strong>Book Title:</strong>
+  <strong><%= t('helpers.label.book_title') %>:</strong>
   <%= link_to @loan.book.title, @loan.book %>
 </p>
 
 <p>
-  <strong>Date:</strong>
+  <strong><%= t('mongoid.attributes.loan.date') %>:</strong>
   <%= l @loan.date %>
 </p>
 
 <p>
-  <strong>Expected return:</strong>
+  <strong><%= t('mongoid.attributes.loan.expected_return') %>:</strong>
   <%= l @loan.expected_return %>
 </p>
+
 <% if @loan.actual_return %>
 <p>
-  <strong>Actual return:</strong>
+  <strong><%= t('mongoid.attributes.loan.actual_return') %>:</strong>
   <%= l @loan.actual_return %>
 </p>
 <% end %>
+
 <p>
-  <strong>Place:</strong>
+  <strong><%= t('mongoid.attributes.loan.place') %>:</strong>
   <%= @loan.place %>
 </p>
 
 <p>
-  <strong>Reader:</strong>
+  <strong><%= t('mongoid.attributes.loan.reader') %>:</strong>
   <%= @loan.reader %>
 </p>
 
-<%= link_to 'Edit', edit_loan_path(@loan) %> |
-<%= link_to 'Back', loans_path %>
+<div class="btn-group" role="group" aria-label="Strumenti">
+  <%= link_to 'Modifica', edit_loan_path(@loan), class: "btn btn-primary" %>
+  <%= link_to 'Elenco', loans_path, class: "btn btn-primary" %>
+</div>

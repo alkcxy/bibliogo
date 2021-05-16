@@ -1,4 +1,4 @@
-<h1>Books</h1>
+<h1><%= t('mongoid.models.book.other') %></h1>
 
 <%= form_tag '/books', method: :get, class: "form-inline" do %>
   <div class="form-group mx-sm-3 mb-2">
@@ -10,17 +10,17 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Code</th>
-      <th>Title</th>
-      <th>Authors</th>
-      <th>Year</th>
-      <th>Genre</th>
-      <th>Language</th>
-      <th>Spot</th>
+      <th><%= t('mongoid.attributes.book.code') %></th>
+      <th><%= t('mongoid.attributes.book.title') %></th>
+      <th><%= t('mongoid.attributes.book.authors') %></th>
+      <th><%= t('mongoid.attributes.book.year') %></th>
+      <th><%= t('mongoid.attributes.book.genre') %></th>
+      <th><%= t('mongoid.attributes.book.language') %></th>
+      <th><%= t('mongoid.attributes.book.spot') %></th>
       <th>ISBN</th>
-      <th>Catalogue</th>
-      <th>Status</th>
-      <th colspan="4"></th>
+      <th><%= t('mongoid.attributes.book.catalogue') %></th>
+      <th><%= t('helpers.label.status') %></th>
+      <th colspan="5" class="text-center"><span class="bi bi-tools"></span></th>
     </tr>
   </thead>
 
@@ -39,25 +39,49 @@
         <td>
         <% date_of_loan = book.loans.unloanable(loan_date, quarantine_date) %>
         <% if date_of_loan %>
-          <% if date_of_loan <= loan_date %>
-            <%= link_to "In Quarantena.", book.loans.lent(loan_date, quarantine_date) %>
-          <% else %>
-            <%= link_to "In Prestito.", book.loans.lent(loan_date, quarantine_date) %>
-          <% end %>
-          Non prestabile fino al <%= loan_from(date_of_loan) %>
+          Dal <%= loan_from(date_of_loan) %>
+        <% else %>
+          <span class="bi bi-check-circle"></span>
         <% end %>
         </td>
-        <td><%= link_to 'Loan', new_loan_path("loan[book_id]": book.id, "book_title": book.title) unless date_of_loan || !current_user %>
-        <td><%= link_to 'Show', book %></td>
-        <td><%= link_to 'Edit', edit_book_path(book) if current_user %></td>
-        <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } if current_user %></td>
+        <td>
+          <% if date_of_loan %>
+            <% if date_of_loan <= loan_date %>
+              <%= link_to "Quarantena", book.loans.lent(loan_date, quarantine_date) %>
+            <% else %>
+              <%= link_to "Prestato", book.loans.lent(loan_date, quarantine_date) %>
+            <% end %>
+          <% else %>
+            <%= link_to 'Prestabile', new_loan_path("loan[book_id]": book.id, "book_title": book.title) unless date_of_loan || !current_user %>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to clone_books_path(params_for_cloning(book)), title: "Clona" do %>
+            <span class="bi bi-clipboard-data"></span>
+          <% end if current_user %>
+        </td>
+        <td>
+          <%= link_to book, title: "Visualizza" do %>
+            <span class="bi bi-view-list"></span>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to edit_book_path(book), title: "Modifica" do %>
+            <span class="bi bi-pencil-square"></span>
+          <% end if current_user %>
+        </td>
+        <td>
+          <%= link_to book, method: :delete, data: { confirm: 'Sei sicuro?' }, title: "Cancella" do %>
+            <span class="bi bi-trash"></span>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <%= paginate @books %>
-<br />
+
 <div class="btn-group" role="group" aria-label="Strumenti">
   <%= link_to 'Nuovo Libro', new_book_path, class: "btn btn-primary" %>
   <%= link_to 'Home', welcome_path, class: "btn btn-primary" %>

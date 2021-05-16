@@ -21,6 +21,14 @@ class BooksController < ApplicationController
     @book.code = Book.count + 1
   end
 
+  # GET /books/clone
+  def clone
+    @book = Book.new(book_params)
+    @book.code = Book.count + 1
+    @book.authors = params[:authors].split(',\s?')
+    render :new
+  end
+
   # GET /books/1/edit
   def edit
   end

@@ -1,35 +1,35 @@
 <p>
-  <strong>Code:</strong>
+  <strong><%= t('mongoid.attributes.book.code') %>:</strong>
   <%= @book.code %>
 </p>
 
 <p>
-  <strong>Title:</strong>
+  <strong><%= t('mongoid.attributes.book.title') %>:</strong>
   <%= @book.title %>
 </p>
 
 <p>
-  <strong>Authors:</strong>
-  <%= @book.authors %>
+  <strong><%= t('mongoid.attributes.book.authors') %>:</strong>
+  <%= @book.authors.join(", ") %>
 </p>
 
 <p>
-  <strong>Years:</strong>
+  <strong><%= t('mongoid.attributes.book.year') %>:</strong>
   <%= @book.year %>
 </p>
 
 <p>
-  <strong>Genre:</strong>
+  <strong><%= t('mongoid.attributes.book.genre') %>:</strong>
   <%= @book.genre %>
 </p>
 
 <p>
-  <strong>Language:</strong>
+  <strong><%= t('mongoid.attributes.book.language') %>:</strong>
   <%= @book.language %>
 </p>
 
 <p>
-  <strong>Spot:</strong>
+  <strong><%= t('mongoid.attributes.book.spot') %>:</strong>
   <%= @book.spot %>
 </p>
 
@@ -39,27 +39,30 @@
 </p>
 
 <p>
-  <strong>Catalogue:</strong>
+  <strong><%= t('mongoid.attributes.book.catalogue') %>:</strong>
   <%= @book.catalogue %>
 </p>
 
 <p>
-  <strong>Abstract:</strong>
+  <strong><%= t('mongoid.attributes.book.abstract') %>:</strong>
   <%= @book.abstract %>
 </p>
-<br />
-<% date_of_loan = @book.loans.unloanable(loan_date, quarantine_date) %>
-<% if date_of_loan %>
-  <% if date_of_loan <= loan_date %>
-    <%= link_to "In Quarantena.", @book.loans.lent(loan_date, quarantine_date) %>
-  <% else %>
-    <%= link_to "In Prestito.", @book.loans.lent(loan_date, quarantine_date) %>
+
+<p>
+  <% date_of_loan = @book.loans.unloanable(loan_date, quarantine_date) %>
+  <% if date_of_loan %>
+    <% if date_of_loan <= loan_date %>
+      <%= link_to "In Quarantena.", @book.loans.lent(loan_date, quarantine_date) %>
+    <% else %>
+      <%= link_to "In Prestito.", @book.loans.lent(loan_date, quarantine_date) %>
+    <% end %>
+    Non prestabile fino al <%= loan_from(date_of_loan) %>
   <% end %>
-  Non prestabile fino al <%= loan_from(date_of_loan) %>
-<% end %>
-<br />
+</p>
+
 <div class="btn-group" role="group" aria-label="Strumenti">
   <%= link_to 'Presta', new_loan_path("loan[book_id]": @book.id, "book_title": @book.title), class: "btn btn-primary" unless date_of_loan || !current_user %>
+  <%= link_to 'Clona', clone_books_path(params_for_cloning(@book)), class: "btn btn-primary" if current_user %>
   <%= link_to 'Modifica', edit_book_path(@book), class: "btn btn-primary" if current_user %>
-  <%= link_to 'Libri', books_path, class: "btn btn-primary" %>
+  <%= link_to 'Elenco', books_path, class: "btn btn-primary" %>
 </div>

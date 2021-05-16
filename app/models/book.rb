@@ -15,6 +15,8 @@ class Book
 
   has_many :loans
 
+  paginates_per 2 if Rails.env.development?
+
   index({ code: 1 }, { unique: true, language_override: "lang", default_language: "it" })
   index({ year: 1 }, { unique: false, language_override: "lang", default_language: "it" })
   index({ "$**": "text" }, { language_override: "lang", default_language: "it" })

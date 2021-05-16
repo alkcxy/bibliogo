@@ -1,5 +1,5 @@
 <p>
-  <strong>Name:</strong>
+  <strong><%= t('mongoid.attributes.user.name') %>:</strong>
   <%= @user.name %>
 </p>
 
@@ -7,7 +7,7 @@
   <strong>Email:</strong>
   <%= @user.email %>
 </p>
-<br />
+
 <div class="btn-group" role="group" aria-label="Strumenti">
   <%= link_to 'Modifica', edit_user_path(@user), class: "btn btn-primary" %>
   <%= link_to 'Utenti', users_path, class: "btn btn-primary" %>

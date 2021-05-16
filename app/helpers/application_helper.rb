@@ -18,6 +18,6 @@ module ApplicationHelper
     end
 
     def loan_from(date_of_loan)
-        I18n.l quarantine_duration.since(date_of_loan), format: :long
+        I18n.l quarantine_duration.since(date_of_loan), format: :short
     end
 end

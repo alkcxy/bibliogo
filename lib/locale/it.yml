@@ -1,6 +1,6 @@
 ---
 it:
-  activerecord:
+  mongoid:
     errors:
       messages:
         record_invalid: 'Validazione fallita: %{errors}'
@@ -9,6 +9,35 @@ it:
             dipendente
           has_many: Il record non può essere cancellato perchè esistono %{record}
             dipendenti
+    models:
+      loan: 
+        one: Prestito
+        other: Prestiti
+      book:
+        one: Libro
+        other: Libri
+      user:
+        one: Utente
+        other: Utenti
+    attributes:
+      book:
+        title: Titolo
+        authors: Autori
+        year: Anno
+        genre: Genere
+        language: Lingua
+        spot: Posto
+        abstract: Sinossi
+        code: Codice
+        catalogue: Catalogo
+      loan:
+        date: Data di inizio prestito
+        expected_return: Data di restituzione attesa
+        actual_return: Data di restituzione definitiva
+        place: Luogo del prestito
+        reader: Lettore
+      user:
+        name: Nome
   date:
     abbr_day_names:
     - dom
@@ -152,6 +181,9 @@ it:
       create: Crea %{model}
       submit: Invia %{model}
       update: Aggiorna %{model}
+    label:
+      book_title: Titolo del libro
+      status: Disponibile
   number:
     currency:
       format:

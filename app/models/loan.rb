@@ -11,6 +11,13 @@ class Loan
 
   belongs_to :book
 
+  validates_presence_of :date
+  validates_presence_of :expected_return
+  validates_presence_of :place
+  validates_presence_of :reader
+
+  paginates_per 2 if Rails.env.development?
+
   def self.unloanable(loan_date, quarantine_date)
     expected = self.expected(loan_date, quarantine_date).first
     actual = self.actual(loan_date, quarantine_date).first

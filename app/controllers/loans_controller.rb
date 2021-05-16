@@ -27,6 +27,13 @@ class LoansController < ApplicationController
   # POST /loans.json
   def create
     @loan = Loan.new(loan_params)
+    if !@loan.valid?
+      respond_to do |format|
+        format.html { render :new }
+        format.json { render json: @loan.errors, status: :unprocessable_entity }
+      end
+      return
+    end
     loans = Loan.where(book_id: @loan.book_id)
     loans_I = loans.where(date:  {'$lte' => @loan.date}).where(expected_return: {'$gte' => (-1*helpers.quarantine_duration).since(@loan.date)})
     loans_II = loans.where(actual_return: nil)
