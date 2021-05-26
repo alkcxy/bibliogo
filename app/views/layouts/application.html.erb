@@ -26,6 +26,7 @@
             <%= link_to "Libri", '/books', class: "btn btn-success btn-lg" %>
             <% if current_user %>
               <%= link_to "Prestiti", '/loans', class: "btn btn-success btn-lg" %>
+              <%= link_to "Impostazioni", '/settings', class: "btn btn-primary btn-lg" %>
             <% end %>
             <% if logged_in? %>
               <%= link_to "Utenti", '/users', class: "btn btn-primary btn-lg" %>

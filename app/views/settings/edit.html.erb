@@ -1,0 +1,9 @@
+<h1>Editing Setting</h1>
+
+<%= render 'form', setting: @setting %>
+
+<br />
+<div class="btn-group" role="group" aria-label="Strumenti">
+    <%= link_to 'Visualizza', @setting, class: "btn btn-primary" %>
+    <%= link_to 'Impostazioni', settings_path, class: "btn btn-primary" %>
+</div>

@@ -1,6 +1,6 @@
 module ApplicationHelper
     def quarantine_duration
-        10.days
+        day_of_quarantine_in_setting.days
     end
 
     def quarantine_date

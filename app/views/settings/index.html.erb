@@ -1,0 +1,42 @@
+<h1><%= t('mongoid.models.setting.other') %></h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Value</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @settings.each do |setting| %>
+      <tr>
+        <td><%= setting.key %></td>
+        <td><%= setting.value %></td>
+        <td>
+          <%= link_to setting, title: "Visualizza" do %>
+            <span class="bi bi-view-list"></span>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to edit_setting_path(setting), title: "Modifica" do %>
+            <span class="bi bi-pencil-square"></span>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to setting, method: :delete, data: { confirm: 'Sei sicuro?' }, title: "Cancella" do %>
+            <span class="bi bi-trash"></span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @settings %>
+
+<div class="btn-group" role="group" aria-label="Strumenti">
+  <%= link_to 'Nuova Impostazione', new_setting_path, class: "btn btn-primary" %>
+  <%= link_to 'Home', welcome_path, class: "btn btn-primary" %>
+</div>
