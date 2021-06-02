@@ -21,6 +21,17 @@
 <% end %>
 
 <p>
+  <% if @loan.actual_return %>
+    <strong>Data di fine quarantena:</strong>
+    <%= loan_from(@loan.actual_return) %>
+  <% else %>
+    <strong>Data prevista di fine quarantena:</strong>
+    <%= loan_from(@loan.expected_return) %>
+  <% end %>
+</p>
+
+
+<p>
   <strong><%= t('mongoid.attributes.loan.place') %>:</strong>
   <%= @loan.place %>
 </p>
