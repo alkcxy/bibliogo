@@ -35,26 +35,32 @@ class LoansController < ApplicationController
       return
     end
     loans = Loan.where(book_id: @loan.book_id)
-    loans_I = loans.where(date:  {'$lte' => @loan.date}).where(expected_return: {'$gte' => (-1*helpers.quarantine_duration).since(@loan.date)})
+    #loans_I = loans.where(date:  {'$lte' => @loan.date}).where(expected_return: {'$gte' => (-1*helpers.quarantine_duration).since(@loan.date)})
+    # logger.debug "Loans I count"
+    # logger.debug loans_I.count
     loans_II = loans.where(actual_return: nil)
       .where(date:  {'$lte' => @loan.expected_return})
 
     loans_III = loans.where(actual_return: { '$exists' => true })
       .where(date:  {'$lte' => @loan.expected_return})
 
-    if @loan.actual_return
+    #if @loan.actual_return
       logger.debug "Print actual return"
       logger.debug @loan.actual_return
-      loans_II = loans_II.where(expected_return: {'$gte' => (-1*helpers.quarantine_duration).since(@loan.actual_return)})
-      loans_III = loans_III.where(actual_return: {'$gte' => (-1*helpers.quarantine_duration).since(@loan.actual_return)})
-    else
-      logger.debug "Print expected return"
-      logger.debug @loan.expected_return
-      loans_II = loans_II.where(expected_return: {'$gte' => (-1*helpers.quarantine_duration).since(@loan.expected_return)})
-      loans_III = loans_III.where(actual_return: {'$gte' => (-1*helpers.quarantine_duration).since(@loan.expected_return)})
-    end
+      loans_II = loans_II.where(expected_return: {'$gte' => (-1*helpers.quarantine_duration).since(@loan.date)})
+      loans_III = loans_III.where(actual_return: {'$gte' => (-1*helpers.quarantine_duration).since(@loan.date)})
+    # else
+    #   logger.debug "Print expected return"
+    #   logger.debug @loan.expected_return
+    #   loans_II = loans_II.where(expected_return: {'$gte' => (-1*helpers.quarantine_duration).since(@loan.expected_return)})
+      logger.debug "Loans II count"
+      logger.debug loans_II.count
+    #   loans_III = loans_III.where(actual_return: {'$gte' => (-1*helpers.quarantine_duration).since(@loan.expected_return)})
+      logger.debug "Loans III count"
+      logger.debug loans_III.count
+    # end
     
-    loans_count = loans_I.count + loans_II.count + loans_III.count
+    loans_count = loans_II.count + loans_III.count
     logger.debug "Print loans data"
     logger.debug @loan.book_id
     logger.debug @loan.date
