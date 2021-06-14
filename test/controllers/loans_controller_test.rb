@@ -8,11 +8,13 @@ class LoansControllerTest < ActionDispatch::IntegrationTest
   end
 
   teardown do
-    @book.loans.each do |loan|
+    Loan.all.each do |loan|
       loan.destroy
     end
+    Book.all.each do |book| 
+      book.destroy
+    end
 
-    @book.destroy
     @setting.destroy
   end
 
@@ -51,6 +53,16 @@ class LoansControllerTest < ActionDispatch::IntegrationTest
     loan = build(:serena)
     assert_difference('Loan.count') do
       post loans_url, params: { loan: { book_id: @book.id, date: loan.date, expected_return: loan.expected_return, place: loan.place, reader: loan.reader } }
+    end
+
+    assert_redirected_to loan_url(Loan.last)
+  end
+
+  test "should create a new loan after actual date of previous loan even if expected date is in the future" do
+    mistero_elfi = create(:mistero_elfi)
+    loan = build(:filippo)
+    assert_difference('Loan.count') do
+      post loans_url, params: { loan: { book_id: mistero_elfi.id, date: loan.date, expected_return: loan.expected_return, place: loan.place, reader: loan.reader } }
     end
 
     assert_redirected_to loan_url(Loan.last)

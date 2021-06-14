@@ -81,7 +81,7 @@
   </thead>
 
   <tbody>
-  <% loans = @book.loans.page(params[:page]) %>
+  <% loans = @book.loans.order_by(actual_return: :desc, expected_return: :desc).page(params[:page]) %>
     <% loans.each do |loan| %>
       <tr>
         <td><%= l loan.date %></td>

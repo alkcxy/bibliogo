@@ -2,7 +2,13 @@ require 'test_helper'
 
 class SettingsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @setting = settings(:one)
+    @setting = create(:quarantine)
+  end
+
+  teardown do
+    Setting.all.each do |setting|
+      setting.destroy
+    end
   end
 
   test "should get index" do
@@ -16,8 +22,9 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create setting" do
+    test = build(:test)
     assert_difference('Setting.count') do
-      post settings_url, params: { setting: { key: @setting.key, value: @setting.value } }
+      post settings_url, params: { setting: { key: test.key, value: test.value } }
     end
 
     assert_redirected_to setting_url(Setting.last)

@@ -2,7 +2,13 @@ require 'test_helper'
 
 class BooksControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @book = books(:one)
+    @book = create(:enciclopedia)
+  end
+
+  teardown do
+    Book.all.each do |book|
+      book.destroy
+    end
   end
 
   test "should get index" do
@@ -16,8 +22,9 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create book" do
+    bambina = build(:bambina)
     assert_difference('Book.count') do
-      post books_url, params: { book: { authors: @book.authors, genre: @book.genre, language: @book.language, spot: @book.spot, title: @book.title, years: @book.years } }
+      post books_url, params: { authors: bambina.authors.join(", "), book: { genre: bambina.genre, language: bambina.language, spot: bambina.spot, title: bambina.title, year: bambina.year, code: bambina.code, isbn: bambina.isbn } }
     end
 
     assert_redirected_to book_url(Book.last)
@@ -34,7 +41,7 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update book" do
-    patch book_url(@book), params: { book: { authors: @book.authors, genre: @book.genre, language: @book.language, spot: @book.spot, title: @book.title, years: @book.years } }
+    patch book_url(@book), params: { authors: "Virginia", book: { genre: @book.genre, language: @book.language, spot: @book.spot, title: @book.title, year: @book.year } }
     assert_redirected_to book_url(@book)
   end
 
