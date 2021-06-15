@@ -105,5 +105,9 @@ FactoryBot.define do
         key { "test" }
         value { "prova" }
       end
+      factory :expected_return do
+        key { "expected_return" }
+        value { "5" }
+      end
     end
   end

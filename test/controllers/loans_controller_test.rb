@@ -15,7 +15,10 @@ class LoansControllerTest < ActionDispatch::IntegrationTest
       book.destroy
     end
 
-    @setting.destroy
+    Setting.all.each do |setting|
+      setting.destroy
+    end
+
   end
 
   test "should get index" do
@@ -24,8 +27,18 @@ class LoansControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get new" do
+    @expected_return = create(:expected_return)
     get new_loan_url
     assert_response :success
+
+    today = Date.today
+    format = "%Y-%m-%d"
+    assert_select "form input#loan_date" do
+      assert_select ":match('value', ?)", I18n.l(today, format: format)  # Not empty
+    end
+    assert_select "form input#loan_expected_return" do
+      assert_select ":match('value', ?)", I18n.l(@expected_return.value.to_i.days.since(today), format: format)  # Not empty
+    end
   end
 
   test "should create loan" do

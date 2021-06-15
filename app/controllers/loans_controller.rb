@@ -17,6 +17,9 @@ class LoansController < ApplicationController
   def new
     @loan = Loan.new
     @loan.book_id = params[:loan][:book_id] if params[:loan] and params[:loan][:book_id]
+    today = Date.today
+    @loan.date = today
+    @loan.expected_return = helpers.day_of_expected_return_in_setting.since today
   end
 
   # GET /loans/1/edit
