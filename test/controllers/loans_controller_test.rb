@@ -39,6 +39,7 @@ class LoansControllerTest < ActionDispatch::IntegrationTest
     assert_select "form input#loan_expected_return" do
       assert_select ":match('value', ?)", I18n.l(@expected_return.value.to_i.days.since(today), format: format)  # Not empty
     end
+    assert_select "form input#loan_actual_return", false
   end
 
   test "should create loan" do
@@ -98,6 +99,7 @@ class LoansControllerTest < ActionDispatch::IntegrationTest
   test "should get edit" do
     get edit_loan_url(@loan)
     assert_response :success
+    assert_select "form input#loan_actual_return", true
   end
 
   test "should update loan" do

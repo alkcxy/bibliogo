@@ -20,18 +20,20 @@
 
   <div class="form-group">
     <%= form.label :date %>
-    <%= form.date_field :date, class: "form-control" %>
+    <%= form.date_field :date, class: "form-control col-sm-4 col-md-3" %>
   </div>
 
   <div class="form-group">
     <%= form.label :expected_return %>
-    <%= form.date_field :expected_return, class: "form-control" %>
+    <%= form.date_field :expected_return, class: "form-control col-sm-4 col-md-3" %>
   </div>
 
+  <% if !current_page?(controller: :loans, action: :new) %>
   <div class="form-group">
     <%= form.label :actual_return %>
-    <%= form.date_field :actual_return, class: "form-control" %>
+    <%= form.date_field :actual_return, class: "form-control col-sm-4 col-md-3" %>
   </div>
+  <% end %>
 
   <div class="form-group">
     <%= form.label :place %>
