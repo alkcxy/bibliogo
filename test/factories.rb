@@ -1,44 +1,71 @@
 FactoryBot.define do
+    factory :user do
+      password { "t34$ttestereS" }
+      password_confirmation { "t34$ttestereS" }
+      name { "Valeria" }
+      email { "inchiostro81@gmail.com" }
+    end
     factory :loan do
-      factory :encicloloan do
-        date { "2021-05-05" }
-        expected_return { "2021-06-05" }
-        actual_return { "2021-05-25" }
-        reader { "Elisa" }
+      factory :with_book do
+        factory :encicloloan do
+          date { 55.days.ago }
+          expected_return { 25.days.ago }
+          actual_return { 35.days.ago }
+          reader { "Elisa" }
+        end
+        factory :serena do
+          date { 35.days.since(Date.today) }
+          expected_return { 65.days.since(Date.today) }
+          reader { "Serena" }
+        end
+        factory :virginia do
+          date { 16.days.ago }
+          expected_return { 14.days.since(Date.today) }
+          reader { "Virginia" }
+        end
+        factory :riccardo do
+          date { 14.days.since(Date.today) }
+          expected_return { 44.days.since(Date.today) }
+          reader { "Riccardo" }
+        end
+        factory :francesco do
+          date { 35.days.ago }
+          expected_return { 6.days.since(Date.today) }
+          reader { "Francesco" }
+        end
+        factory :gaia do 
+          date { 29.days.ago }
+          actual_return { 16.days.ago }
+          expected_return { 1.day.since(Date.today) }
+          reader { "Gaia" }
+        end
+        factory :filippo do 
+          date { 6.days.ago }
+          expected_return { 24.days.since(Date.today) }
+          reader { "Filippo" }
+        end
+        place { "Poggio Mirteto Scalo" }
+        book
       end
-      factory :serena do
-        date { "2021-07-25" }
-        expected_return { "2021-08-25" }
-        reader { "Serena" }
+      factory :without_book do
+        factory :in_loan do
+          date { 12.days.ago }
+          expected_return { 18.days.since(Date.today) }
+          reader { "Giuseppe" }
+          place { "Poggio Mirteto Scalo" }
+          factory :in_quarantine do
+            actual_return { 2.days.ago }
+          end
+          factory :lendable do
+            date { 14.days.ago }
+            actual_return { 12.days.ago }
+          end
+          factory :not_returned do
+            date { 42.days.ago }
+            expected_return { 12.days.ago }
+          end
+        end
       end
-      factory :virginia do
-        date { "2021-06-04" }
-        expected_return { "2021-07-04" }
-        reader { "Virginia" }
-      end
-      factory :riccardo do
-        date { "2021-07-04" }
-        expected_return { "2021-08-04" }
-        reader { "Riccardo" }
-      end
-      factory :francesco do
-        date { "2021-05-26" }
-        expected_return { "2021-06-26" }
-        reader { "Francesco" }
-      end
-      factory :gaia do 
-        date { "2021-05-21" }
-        actual_return { "2021-06-04" }
-        expected_return { "2021-06-21" }
-        reader { "Gaia" }
-      end
-      factory :filippo do 
-        date { "2021-06-14" }
-        expected_return { "2021-07-14" }
-        reader { "Filippo" }
-      end
-      place { "Poggio Mirteto Scalo" }
-      book
     end
 
     factory :book, aliases: [:enciclopedia] do
@@ -95,6 +122,13 @@ FactoryBot.define do
           # You may need to reload the record here, depending on your application
           book.reload
         end
+      end
+
+      factory :randomized do
+        sequence(:title) { |n| "Il mistero degli elfi #{n}" }
+        sequence(:isbn) { |n| "000000000#{n}" }
+        sequence(:code) { |n| "#{n}" }
+        sequence(:catalogue) { |n| "#{n}.WIT" }
       end
     end
 

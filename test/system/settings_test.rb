@@ -2,7 +2,8 @@ require "application_system_test_case"
 
 class SettingsTest < ApplicationSystemTestCase
   setup do
-    @setting = settings(:one)
+    @setting = create(:setting)
+    create(:test)
   end
 
   test "visiting the index" do

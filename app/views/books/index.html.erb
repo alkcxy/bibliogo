@@ -37,22 +37,18 @@
         <td><%= book.isbn %></td>
         <td><%= book.catalogue %></td>
         <td>
-        <% date_of_loan = book.loans.unloanable(loan_date, quarantine_date) %>
-        <% if date_of_loan %>
-          Dal <%= loan_from(date_of_loan) %>
-        <% else %>
-          <span class="bi bi-check-circle"></span>
-        <% end %>
+          <% status = loan_status(book.loans) %>
+          <% if status[:loan] %>
+            Dal <%= loan_from(status[:returned_date]) %>
+          <% else %>
+            <span class="bi bi-check-circle"></span>
+          <% end %>
         </td>
         <td>
-          <% if date_of_loan %>
-            <% if date_of_loan <= loan_date %>
-              <%= link_to "Quarantena", book.loans.lent(loan_date, quarantine_date) %>
-            <% else %>
-              <%= link_to "Prestato", book.loans.lent(loan_date, quarantine_date) %>
-            <% end %>
+          <% if status[:loan] %>
+            <%= link_to status[:message], status[:loan] %>
           <% else %>
-            <%= link_to 'Prestabile', new_loan_path("loan[book_id]": book.id, "book_title": book.title) unless date_of_loan || !current_user %>
+            <%= link_to status[:message], new_loan_path %>
           <% end %>
         </td>
         <td>

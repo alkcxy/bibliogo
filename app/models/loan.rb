@@ -18,35 +18,22 @@ class Loan
 
   paginates_per 2 if Rails.env.development?
 
-  def self.unloanable(loan_date, quarantine_date)
-    expected = self.expected(loan_date, quarantine_date).first
-    actual = self.actual(loan_date, quarantine_date).first
-
-    if actual
-      actual.actual_return
-    elsif expected && !expected.actual_return
-      expected.expected_return
-    else
-      nil
-    end
-
-  end
-
-  def self.lent(loan_date, quarantine_date)
-    expected = self.expected(loan_date, quarantine_date).first
-    actual = self.actual(loan_date, quarantine_date).first
-
-    if actual
-      actual
-    elsif expected
-      expected
-    else
-      nil
-    end
-  end
-
-  scope :expected, -> (loan_date, quarantine_date) { where({ date: { '$lte' => loan_date }, actual_return: nil, expected_return: { '$gt' => quarantine_date }}).order_by(expected_return: :desc) }
-  scope :actual, -> (loan_date, quarantine_date) { where({ date: { '$lte' => loan_date }, actual_return: { '$gt' => quarantine_date }}).order_by(actual_return: :desc) }
-
+  scope :active, -> (loan_date, return_date) {
+    any_of(
+      { date: { '$gte' => loan_date, '$lte' => return_date }}, 
+      { date: { '$lte' => loan_date }, expected_return: { 'gte' => return_date }, actual_return: nil}, 
+      { date: { '$lte' => loan_date }, actual_return: { 'gte' => return_date }},
+      { expected_return: { '$gte' => loan_date, '$lte' => return_date }, actual_return: nil },
+      { actual_return: { '$gte' => loan_date, '$lte' => return_date }}
+    )
+    .order_by(actual_return: :desc, expected_return: :desc)
+  }
+  scope :status, -> (day, quarantine_duration) { 
+    any_of(
+      { date: { '$lte' => day }, actual_return: nil}, 
+      { date: { '$lte' => day }, actual_return: { '$gte' => quarantine_duration.before(day) }},
+    )
+    .order_by(actual_return: :desc, expected_return: :desc)
+  }
 
 end

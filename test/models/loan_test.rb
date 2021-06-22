@@ -5,13 +5,33 @@ class LoanTest < ActiveSupport::TestCase
   #   assert true
   # end
 
+  setup do
+    @book = create(:book_with_loans)
+    @loan = @book.loans.first
+    @setting = create(:setting)
+  end
+
+  teardown do
+    Loan.all.each do |loan|
+      loan.destroy
+    end
+    Book.all.each do |book| 
+      book.destroy
+    end
+
+    Setting.all.each do |setting|
+      setting.destroy
+    end
+
+  end
+
   test "is not loanable" do
     
-    mistero_elfi = create(:mistero_elfi)
-    loan = create(:filippo, book_id: mistero_elfi.id)
-    date_of_loan = mistero_elfi.loans.unloanable(Date.new(2021, 06, 14), Date.new(2021, 06, 11))
+    book = create(:book_with_loans)
+    status = book.loans.status(Date.today, 3.days).first
+    Loan.active(Date.today, 1.month.since(Date.today)).where(book_id: book.id)
 
-    assert date_of_loan != nil
+    assert status.nil?
 
   end
 end

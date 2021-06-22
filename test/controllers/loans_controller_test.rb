@@ -85,7 +85,7 @@ class LoansControllerTest < ActionDispatch::IntegrationTest
   test "should not create loan when date is not gte return date + quarantine period" do
     loan = build(:francesco)
     assert_difference('Loan.count', 0) do
-      post loans_url, params: { loan: { book_id: @book.id, date: loan.date, expected_return: loan.expected_return, place: loan.place, reader: loan.reader } }
+      post loans_url, params: { loan: { book_id: @book.id, date: loan.date, expected_return: loan.expected_return, actual_return: loan.actual_return, place: loan.place, reader: loan.reader } }
     end
 
     assert_response :success

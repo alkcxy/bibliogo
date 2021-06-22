@@ -1,13 +1,9 @@
 json.extract! book, :id, :title, :year, :genre, :language, :spot, :isbn, :abstract, :code, :catalogue, :created_at, :updated_at
 json.authors book.authors.join(', ')
 json.url book_url(book, format: :json)
-date_of_loan = book.loans.unloanable(loan_date, quarantine_date)
-if date_of_loan
-    mex = "In Prestito."
-    if date_of_loan <= loan_date
-        mex = "In Quarantena."
-    end
-    json.loan mex + " Non prestabile fino al " + l(loan_from_raw(date_of_loan))
+status = loan_status(book.loans)
+if status[:loan]
+    json.loan status[:message] + ". Non prestabile fino al " + l(loan_from_raw(status[:returned_date]))
 else
-    json.loan "Prestabile"
+    json.loan status[:message]
 end
