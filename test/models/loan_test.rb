@@ -29,9 +29,13 @@ class LoanTest < ActiveSupport::TestCase
     
     book = create(:book_with_loans)
     status = book.loans.status(Date.today, 3.days).first
-    Loan.active(Date.today, 1.month.since(Date.today)).where(book_id: book.id)
-
     assert status.nil?
 
+  end
+
+  test "there isn't any active loan today" do
+    book = create(:book_with_loans)
+    loan = Loan.active(Date.today, 1.month.since(Date.today)).where(book_id: book.id).first
+    assert loan.nil?
   end
 end

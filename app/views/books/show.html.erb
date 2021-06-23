@@ -49,7 +49,8 @@
 </p>
 
 <% status = loan_status(@book.loans) %>
-<%= content_tag :p, id: "unloanable-alert", class: "alert alert-#{status[:css]}" do %>
+<% id_name = status[:loan] ? "unloanable-alert" : "loanable" %>
+<%= content_tag :p, id: id_name, class: "alert alert-#{status[:css]}" do %>
   <%= link_to_if status[:loan], status[:message], status[:loan] %>.
   <% if status[:loan] %>
     Non prestabile fino al <%= loan_from(status[:returned_date]) %>
