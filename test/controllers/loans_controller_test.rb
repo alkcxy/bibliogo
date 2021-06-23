@@ -86,6 +86,7 @@ class LoansControllerTest < ActionDispatch::IntegrationTest
     loan = build(:francesco)
     assert_difference('Loan.count', 0) do
       post loans_url, params: { loan: { book_id: @book.id, date: loan.date, expected_return: loan.expected_return, actual_return: loan.actual_return, place: loan.place, reader: loan.reader } }
+      assert_select "#notice", "Book already lent for this period."
     end
 
     assert_response :success
