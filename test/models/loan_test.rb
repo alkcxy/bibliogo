@@ -33,8 +33,12 @@ class LoanTest < ActiveSupport::TestCase
   end
 
   test "there is a late loan" do
-    @loan = create(:not_returned, book: create(:bambina))
+    @book = create(:bambina)
+    @loan = create(:not_returned, book: @book)
     loan = Loan.late(Date.today).first
     assert loan == @loan
+
+    book = Book.late(Date.today).first
+    assert book == @book
   end
 end
