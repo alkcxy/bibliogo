@@ -12,11 +12,13 @@ module LoansHelper
         loan = book_loans.status(loan_date, quarantine_duration).first if book_loans
         if book_loans.nil? || loan.nil?
             message = "Disponibile"
+            css="success"
             returned_date = nil
             status = {
                 message: message,
                 returned_date: returned_date,
-                loan: loan
+                loan: loan,
+                css: css
             }
         else
             if loan.actual_return
@@ -27,18 +29,22 @@ module LoansHelper
 
             if !loan.actual_return && loan.expected_return <= loan_date
                 message = "Ancora da restituire"
+                css = "danger"
             else
                 if returned_date <= loan_date
                     message = "In quarantena"
+                    css="warning"
                 else
                     message = "In prestito"
+                    css="info"
                 end
             end
 
             status = {
                 message: message,
                 returned_date: returned_date,
-                loan: loan
+                loan: loan,
+                css: css
             }
         end
         logger.debug status

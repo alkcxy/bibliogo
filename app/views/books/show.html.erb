@@ -49,10 +49,12 @@
 </p>
 
 <% status = loan_status(@book.loans) %>
-<%= content_tag :p, id: "unloanable-alert", class: "alert alert-danger" do %>
-  <%= link_to status[:message], status[:loan] %>.
-  Non prestabile fino al <%= loan_from(status[:returned_date]) %>
-<% end if status[:loan] %>
+<%= content_tag :p, id: "unloanable-alert", class: "alert alert-#{status[:css]}" do %>
+  <%= link_to_if status[:loan], status[:message], status[:loan] %>.
+  <% if status[:loan] %>
+    Non prestabile fino al <%= loan_from(status[:returned_date]) %>
+  <% end %>
+<% end %>
 
 <div class="btn-group" role="group" aria-label="Strumenti">
   <%= link_to 'Presta', new_loan_path("loan[book_id]": @book.id, "book_title": @book.title), class: "btn btn-primary", id: "new-loan" unless status[:loan] || !current_user %>

@@ -17,6 +17,10 @@ module ApplicationHelper
         end
     end
 
+    def returned_from(date_of_loan)
+        I18n.l date_of_loan, format: :short
+    end
+
     def loan_from(date_of_loan)
         I18n.l quarantine_duration.since(date_of_loan), format: :short
     end

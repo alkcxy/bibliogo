@@ -35,5 +35,8 @@ class Loan
     )
     .order_by(actual_return: :desc, expected_return: :desc)
   }
+  scope :late, -> (day) {
+    where(actual_return: nil, expected_return: { '$lte' => day })
+  }
 
 end

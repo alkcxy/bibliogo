@@ -44,7 +44,7 @@
             <span class="bi bi-check-circle"></span>
           <% end %>
         </td>
-        <td>
+        <td class="table-<%= status[:css] %>">
           <% if status[:loan] %>
             <%= link_to status[:message], status[:loan] %>
           <% else %>

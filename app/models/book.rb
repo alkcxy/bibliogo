@@ -28,4 +28,6 @@ class Book
   validates_presence_of :spot
   validates_presence_of :isbn
 
+  scope :late, -> (day) { Book.where({ id: { "$in" => Loan.late(day).pluck(:book_id).uniq }})}
+
 end
