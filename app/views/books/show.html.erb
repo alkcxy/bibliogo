@@ -48,20 +48,17 @@
   <%= @book.abstract %>
 </p>
 
-<p>
-  <% date_of_loan = @book.loans.unloanable(loan_date, quarantine_date) %>
-  <% if date_of_loan %>
-    <% if date_of_loan <= loan_date %>
-      <%= link_to "In Quarantena.", @book.loans.lent(loan_date, quarantine_date) %>
-    <% else %>
-      <%= link_to "In Prestito.", @book.loans.lent(loan_date, quarantine_date) %>
-    <% end %>
-    Non prestabile fino al <%= loan_from(date_of_loan) %>
+<% status = loan_status(@book.loans) %>
+<% id_name = status[:loan] ? "unloanable-alert" : "loanable" %>
+<%= content_tag :p, id: id_name, class: "alert alert-#{status[:css]}" do %>
+  <%= link_to_if status[:loan], status[:message], status[:loan] %>.
+  <% if status[:loan] %>
+    Non prestabile fino al <%= loan_from(status[:returned_date]) %>
   <% end %>
-</p>
+<% end %>
 
 <div class="btn-group" role="group" aria-label="Strumenti">
-  <%= link_to 'Presta', new_loan_path("loan[book_id]": @book.id, "book_title": @book.title), class: "btn btn-primary" unless date_of_loan || !current_user %>
+  <%= link_to 'Presta', new_loan_path("loan[book_id]": @book.id, "book_title": @book.title), class: "btn btn-primary", id: "new-loan" unless status[:loan] || !current_user %>
   <%= link_to 'Clona', clone_books_path(params_for_cloning(@book)), class: "btn btn-primary" if current_user %>
   <%= link_to 'Modifica', edit_book_path(@book), class: "btn btn-primary" if current_user %>
   <%= link_to 'Elenco', books_path, class: "btn btn-primary" %>

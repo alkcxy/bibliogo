@@ -21,6 +21,7 @@ class SessionsController < ApplicationController
   end
 
   def welcome
+    @books = Book.late(Date.today)
   end
 
   def logout
