@@ -19,11 +19,13 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     User.all.each do |user|
       user.destroy
     end
+
+    Sequence.delete_all
   end
 
   test "should get index" do
-    Book.delete_all
     Loan.delete_all
+    Book.delete_all
     one = create(:randomized) do |book|
       create_list(:not_returned, 1, book: book)
     end
@@ -52,10 +54,28 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "Code of a new Book should be the max + 1 of previously created ones" do
+    Loan.delete_all
+    Book.delete_all
+    create(:randomized)
+    create(:randomized)
+    create(:randomized)
+    create(:randomized)
+    Book.where(code: 1).destroy
+    expected_code = Book.max_code.first.code + 1
+    
+    bambina = build(:bambina)
+    assert_difference('Book.count') do
+      post books_url, params: { authors: bambina.authors.join(", "), book: { genre: bambina.genre, language: bambina.language, spot: bambina.spot, title: bambina.title, year: bambina.year, isbn: bambina.isbn } }
+    end
+
+    assert_redirected_to book_url(Book.last)
+  end
+
   test "should create book" do
     bambina = build(:bambina)
     assert_difference('Book.count') do
-      post books_url, params: { authors: bambina.authors.join(", "), book: { genre: bambina.genre, language: bambina.language, spot: bambina.spot, title: bambina.title, year: bambina.year, code: bambina.code, isbn: bambina.isbn } }
+      post books_url, params: { authors: bambina.authors.join(", "), book: { genre: bambina.genre, language: bambina.language, spot: bambina.spot, title: bambina.title, year: bambina.year, isbn: bambina.isbn } }
     end
 
     assert_redirected_to book_url(Book.last)

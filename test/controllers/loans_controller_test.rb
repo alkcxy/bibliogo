@@ -14,7 +14,6 @@ class LoansControllerTest < ActionDispatch::IntegrationTest
     Book.all.each do |book| 
       book.destroy
     end
-
     Setting.all.each do |setting|
       setting.destroy
     end

@@ -1,5 +1,6 @@
 # Bibliogo
 A software for library and lending books
+You can create a book catalogue and keep track of the lent books
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
@@ -18,13 +19,11 @@ Things you may want to cover:
 
 * How to run the test suite
 
-Currently, the only reliable tests are for the controllers and the loan model:
+Currently, the only reliable tests are for the controllers models:
 
-`docker compose exec -e RAILS_ENV=test -e PARALLEL_WORKERS=1 bibliogo rails test test/controllers`
+`docker compose exec -e RAILS_ENV=test -e PARALLEL_WORKERS=1 bibliogo rails test`
 
-`docker compose exec -e RAILS_ENV=test -e PARALLEL_WORKERS=1 bibliogo rails test test/models`
-
-* Services (job queues, cache servers, search engines, etc.)
+I'm still struggling for making the system tests work out
 
 * Deployment instructions
 

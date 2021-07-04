@@ -6,9 +6,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
   end
 
   teardown do
-    Setting.all.each do |setting|
-      setting.destroy
-    end
+    Setting.delete_all
   end
 
   test "should get index" do

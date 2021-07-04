@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :sequences, except: [:destroy, :edit, :update]
   resources :settings
   resources :loans
   resources :books do

@@ -144,4 +144,9 @@ FactoryBot.define do
         value { "5" }
       end
     end
+
+    factory :sequence do
+      key { "book" }
+      sequence(:value) { |n| "#{n}" }
+    end
   end

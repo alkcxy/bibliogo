@@ -18,13 +18,11 @@ class BooksController < ApplicationController
   # GET /books/new
   def new
     @book = Book.new
-    @book.code = Book.count + 1
   end
 
   # GET /books/clone
   def clone
     @book = Book.new(book_params)
-    @book.code = Book.count + 1
     @book.authors = params[:authors].split(',\s?')
     render :new
   end
@@ -37,7 +35,7 @@ class BooksController < ApplicationController
   # POST /books.json
   def create
     @book = Book.new(book_params)
-    @book.code = Book.count + 1 if @book.code.blank?
+    @book.code = Book.next_code
     @book.authors = params[:authors].split(',\s?')
 
     respond_to do |format|
@@ -84,6 +82,6 @@ class BooksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def book_params
-      params.require(:book).permit(:title, :year, :genre, :language, :spot, :isbn, :abstract, :code, :catalogue)
+      params.require(:book).permit(:title, :year, :genre, :language, :spot, :isbn, :abstract, :catalogue)
     end
 end

@@ -30,4 +30,17 @@ class Book
 
   scope :late, -> (day) { Book.where({ id: { "$in" => Loan.late(day).pluck(:book_id).uniq }})}
 
+  scope :max_code, -> () { Book.order_by({ code: :desc }).limit(1) }
+
+  def self.next_code
+    value = nil
+    key = self.name
+    if Sequence.max_sequence(key).first.nil?
+      book = max_code.first
+      value = book.nil? ? 1 : book.code + 1
+    end
+    sequence = Sequence.create_sequence(key, value)
+    sequence.value
+  end
+
 end
