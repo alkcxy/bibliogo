@@ -1,6 +1,13 @@
 # Bibliogo
+
 A software for library and lending books
 You can create a book catalogue and keep track of the lent books
+
+# Som useful query
+Count all loans group by Place:
+`db.loans.aggregate(   [{ $group: {_id: "$place", totalAmount: { $sum: 1 }}}])`
+
+---
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
