@@ -26,11 +26,20 @@ Things you may want to cover:
 
 * How to run the test suite
 
-Currently, the only reliable tests are for the controllers models:
+Unit and controller tests:
 
 `docker compose exec -e RAILS_ENV=test -e PARALLEL_WORKERS=1 bibliogo rails test`
 
-I'm still struggling for making the system tests work out
+System (e2e) tests run in their own stack, with a remote Chrome driven by Selenium:
+
+```
+docker compose -f docker-compose.e2e.yml build
+docker compose -f docker-compose.e2e.yml run --rm bibliogo sh -c "rake db:mongoid:create_indexes && rails test:system"
+```
+
+To run everything in the e2e stack (unit + system):
+
+`docker compose -f docker-compose.e2e.yml run --rm bibliogo sh -c "rake db:mongoid:create_indexes && rails test"`
 
 * Deployment instructions
 
