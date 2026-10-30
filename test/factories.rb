@@ -76,7 +76,7 @@ FactoryBot.define do
       language { "Italiano" }
       spot { "Furgone" }
       isbn { "01234567891011" }
-      code { 10 }
+      sequence(:code)
       catalogue { "C.123" }
 
       factory :book_with_loans do
@@ -99,7 +99,6 @@ FactoryBot.define do
         language { "Ita" }
         spot { "Furgone" }
         isbn { "9788809742222" }
-        code { 1 }
         catalogue { "853.WIT" }
       end
 
@@ -127,7 +126,6 @@ FactoryBot.define do
       factory :randomized do
         sequence(:title) { |n| "Il mistero degli elfi #{n}" }
         sequence(:isbn) { |n| "000000000#{n}" }
-        sequence(:code) { |n| "#{n}" }
         sequence(:catalogue) { |n| "#{n}.WIT" }
       end
     end
