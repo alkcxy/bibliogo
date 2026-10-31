@@ -21,7 +21,7 @@ class SequencesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create sequence" do
     assert_difference('Sequence.count') do
-      post sequences_url, params: { sequence: { key: @sequence.key, value: @sequence.value } }
+      post sequences_url, params: { sequence: { key: @sequence.key, value: @sequence.value + 1 } }
     end
 
     assert_redirected_to sequence_url(Sequence.last)

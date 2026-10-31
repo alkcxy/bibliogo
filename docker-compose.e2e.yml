@@ -1,0 +1,42 @@
+version: '3.5'
+
+services:
+  mongo:
+    image: mongo
+    restart: 'no'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: bibliogo-e2e-password
+
+  chrome:
+    image: selenium/standalone-chrome:3.141.59
+    restart: 'no'
+    shm_size: 2g
+    ports:
+      - 4444:4444
+
+  bibliogo:
+    build:
+      context: .
+      dockerfile: Dockerfile.e2e
+    image: bibliogo-e2e
+    restart: 'no'
+    command: sleep infinity
+    volumes:
+      - .:/bibliogo
+      # keep the image-baked assets visible over the source mount
+      - bibliogo_node_modules:/bibliogo/node_modules
+      - bibliogo_packs_test:/bibliogo/public/packs-test
+    depends_on:
+      - mongo
+      - chrome
+    environment:
+      MONGODB_HOST: mongo
+      MONGODB_DATABASE: bibliogo_test
+      MONGODB_ROOT_PASSWORD: bibliogo-e2e-password
+      SELENIUM_REMOTE_URL: http://chrome:4444/wd/hub
+      PARALLEL_WORKERS: 1
+
+volumes:
+  bibliogo_node_modules:
+  bibliogo_packs_test:

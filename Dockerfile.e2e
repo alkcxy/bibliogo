@@ -1,0 +1,21 @@
+FROM node:12.20-buster-slim AS node_base
+RUN echo "NODE Version:" && node --version
+RUN echo "NPM Version:" && npm --version
+
+FROM ruby:2.7-slim
+LABEL Alessio Caradossi <alkcxy@gmail.com>
+RUN mkdir /bibliogo
+WORKDIR /bibliogo
+RUN rm -f /etc/apt/sources.list.d/* /etc/apt/sources.list && \
+    echo "deb http://archive.debian.org/debian bullseye main" > /etc/apt/sources.list && \
+    echo "deb http://archive.debian.org/debian-security bullseye-security main" >> /etc/apt/sources.list
+RUN apt-get -o Acquire::Check-Valid-Until=false update && apt-get install -y -qq build-essential --no-install-recommends
+COPY . /bibliogo
+ENV RAILS_ENV=test PARALLEL_WORKERS=1
+RUN gem update bundle
+RUN bundle install
+COPY --from=node_base /usr/local/bin /usr/local/bin
+COPY --from=node_base /usr/local/lib/node_modules /usr/local/lib/node_modules
+COPY --from=node_base /opt/yarn-v1.22.5 /opt/yarn-v1.22.5
+RUN yarn install --frozen-lockfile
+RUN SECRET_KEY_BASE=dummy rails webpacker:compile

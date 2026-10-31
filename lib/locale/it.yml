@@ -19,6 +19,9 @@ it:
       user:
         one: Utente
         other: Utenti
+      setting:
+        one: Impostazione
+        other: Impostazioni
     attributes:
       book:
         title: Titolo
