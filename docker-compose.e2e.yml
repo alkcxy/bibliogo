@@ -24,6 +24,9 @@ services:
     command: sleep infinity
     volumes:
       - .:/bibliogo
+      # keep the image-baked assets visible over the source mount
+      - bibliogo_node_modules:/bibliogo/node_modules
+      - bibliogo_packs_test:/bibliogo/public/packs-test
     depends_on:
       - mongo
       - chrome
@@ -33,3 +36,7 @@ services:
       MONGODB_ROOT_PASSWORD: bibliogo-e2e-password
       SELENIUM_REMOTE_URL: http://chrome:4444/wd/hub
       PARALLEL_WORKERS: 1
+
+volumes:
+  bibliogo_node_modules:
+  bibliogo_packs_test:
