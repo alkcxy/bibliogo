@@ -35,5 +35,5 @@ Catalogo e prestiti per una piccola biblioteca. Rails + MongoDB, nessun ActiveRe
 
 ## Workflow
 
-- Branch di default: `main`. CI (`.github/workflows/docker-image.yml`) pubblica `alkcxy/bibliogo:latest` su Docker Hub a ogni push su `main`.
+- Branch di default: `main`. CI in `.github/workflows/`: `pr-gate.yml` esegue unit + system test (stack e2e) su ogni PR ed è il check da rendere obbligatorio per il merge; `test.yml` rilancia i test a mano o con label `run-tests`; `docker-build.yml` builda e pusha `alkcxy/bibliogo` su Docker Hub (tag da `metadata-action` + label OCI) al push su `main`/tag `v*`, e su PR con label `build-docker`.
 - Sempre feature branch + PR verso `main`, mai commit diretti su `main`.
