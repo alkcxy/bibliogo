@@ -15,7 +15,7 @@
   <tbody>
     <% @loans.each do |loan| %>
       <tr>
-        <td><%= link_to loan.book.title, loan.book %></td>
+        <td><%= loan.book ? link_to(loan.book.title, loan.book) : t('helpers.label.deleted_book') %></td>
         <td><%= l loan.date %></td>
         <td><%= l loan.expected_return %></td>
         <td><%= loan.place %></td>
