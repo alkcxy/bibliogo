@@ -22,3 +22,4 @@ RUN bundle install
 COPY package.json yarn.lock ./
 RUN yarn install
 COPY . .
+RUN SECRET_KEY_BASE=dummy RAILS_ENV=production NODE_ENV=production bin/rails webpacker:compile
