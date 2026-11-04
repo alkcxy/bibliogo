@@ -186,6 +186,7 @@ it:
       update: Aggiorna %{model}
     label:
       book_title: Titolo del libro
+      deleted_book: Libro eliminato
       status: Disponibile
   number:
     currency:

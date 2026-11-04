@@ -1,6 +1,6 @@
 <p>
   <strong><%= t('helpers.label.book_title') %>:</strong>
-  <%= link_to @loan.book.title, @loan.book %>
+  <%= @loan.book ? link_to(@loan.book.title, @loan.book) : t('helpers.label.deleted_book') %>
 </p>
 
 <p>

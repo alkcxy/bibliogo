@@ -25,6 +25,26 @@ class LoansControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should get index with a loan of a deleted book" do
+    deleted_book = create(:bambina)
+    create(:virginia, book: deleted_book)
+    deleted_book.destroy
+
+    get loans_url
+    assert_response :success
+    assert_select "td", text: "Libro eliminato"
+  end
+
+  test "should show loan of a deleted book" do
+    deleted_book = create(:bambina)
+    loan = create(:virginia, book: deleted_book)
+    deleted_book.destroy
+
+    get loan_url(loan)
+    assert_response :success
+    assert_select "p", text: /Libro eliminato/
+  end
+
   test "should get new" do
     @expected_return = create(:expected_return)
     get new_loan_url
