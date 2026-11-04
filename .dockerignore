@@ -1,0 +1,39 @@
+# VCS, CI and agent config
+.git
+.github
+.vibe
+.gitignore
+.dockerignore
+
+# Dev-only files: production boots from what is left, dev and e2e
+# stacks mount the source over /bibliogo and do not use these either
+test
+coverage
+node_modules
+storage
+public/packs
+public/packs-test
+yarn-error.log
+yarn-debug.log
+.byebug_history
+.bash_history
+
+# Runtime junk, keep the directories only
+tmp/*
+!tmp/.keep
+log/*
+!log/.keep
+
+# Local-only config and docs
+.env
+*.md
+
+# Docker files used only for local dev and CI
+Dockerfile
+Dockerfile.e2e
+docker-compose.yml
+docker-compose.e2e.yml
+entrypoint.sh
+
+# OS junk
+.DS_Store
